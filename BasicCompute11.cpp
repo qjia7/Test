@@ -27,7 +27,7 @@
 //#define TEST_DOUBLE
 
 // The number of elements in a buffer to be tested
-const UINT OutputM = 1024, OutputN = OutputM, OutputK = OutputM;
+const UINT OutputM = 512, OutputN = OutputM, OutputK = OutputM;
 const UINT TSM = 4, TSN = 8;
 const UINT NUM_ELEMENTS = OutputM * OutputN;
 

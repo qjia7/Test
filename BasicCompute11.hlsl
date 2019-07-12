@@ -14,7 +14,7 @@ RWStructuredBuffer<float> dst : register(u0);
 
 static int VEC_SIZE = 1;
 static int TILE_M = 4;
-static int TILE_K = 8;
+static int TILE_K = 16;
 static int TILE_N = 8;
 
 static uint3 gl_WorkGroupID = uint3(0, 0, 0);
@@ -36,8 +36,9 @@ void initGLBuiltins(CS_INPUT input)
 [numthreads(8, 1, 1)]
 void L3_SIMD_4x1_1x8(CS_INPUT input)
 {
+    IntelExt_Init();
     initGLBuiltins(input);
-    const int M = 1024, N = M, K = M;
+    const int M = 512, N = M, K = M;
     int width0 = K / VEC_SIZE;
     int width1 = N / VEC_SIZE;
 
@@ -87,7 +88,6 @@ void L3_SIMD_4x1_1x8(CS_INPUT input)
         float  brow6 = src1[src1_read0];  src1_read0 += width1;
         float  brow7 = src1[src1_read0];  src1_read0 += width1;
 
-		IntelExt_Init();
         arow = src0[src0_read + 0 * width0 ];
         dot00 = mad(IntelExt_WaveReadLaneAt( arow, 0 ), brow0, dot00);
         dot00 = mad(IntelExt_WaveReadLaneAt( arow, 1 ), brow1, dot00);
